@@ -1,3 +1,0 @@
-src=$1
-dst=$2
-mv ~/.Trash/$src $dst
