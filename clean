@@ -1,0 +1,56 @@
+#! /usr/bin/env bash
+if [[ $# > 3 ]];then
+    echo "暂不支持删除多种类型文件"
+    exit 1;
+fi
+
+if [[ $# < 2 ]];then
+    echo "参数太少"
+    exit 1;
+fi
+
+
+op="-n"
+
+
+if [[ $# == 3 ]] ;then
+    op=$1
+    path=$2
+    trash=$3
+else 
+    path=$1
+    trash=$2
+fi
+
+if [[ ! -d $path ]];then
+    echo "查找路径不存在"
+    exit 1
+fi
+
+log=$HOME/Ocean/logs/clean.out
+
+find $path -name $trash > $log 
+
+count=`cat $log | wc -l | awk '{print $1}'`
+
+if [[ $op == "-f" ]];then
+    find $path -name $trash -exec rm -rf {} \;
+    echo "已强制删除${count}条记录"
+elif [[ $op == "-n" ]];then
+    if [[ $count == 0 ]];then
+        echo "没有找到任何文件"
+        exit 
+    fi
+    cat $log
+    echo "将删除以上${count}条记录"
+else
+    echo "无法识别的参数"
+    exit 1
+fi 
+
+
+
+
+
+
+        

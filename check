@@ -1,0 +1,21 @@
+table=$1
+field=$2
+if [[ $field == "" ]];then
+    field=updatetime
+fi
+newid=$3
+if [[ newid=="" ]];then
+    id=` mysql -hrm-2ze99co2cx336f809.mysql.rds.aliyuncs.com -uapp_zhengxin -pTY3Pbc8Y%nq2#sld prism1 -e "select max(id) as id from $table"`
+
+    echo $id
+    newid=`echo $id | awk -F\  '{ print $2 }'`
+fi
+
+old=`mysql -hrr-2ze61dsj9d3xl34s3425.mysql.rds.aliyuncs.com -ujindi -pjindichangsheng prism1 -e "select id, $field from $table where id=$newid"`
+
+new=`mysql -hrm-2ze99co2cx336f809.mysql.rds.aliyuncs.com -uapp_zhengxin -pTY3Pbc8Y%nq2#sld prism1 -e "select id, $field  from $table where
+id=$newid"`
+
+
+echo old, $old
+echo new, $new
