@@ -4,8 +4,6 @@ if [[ $user == "" ]];then
     user="work"
 fi 
 
-
-
 case $user in  
     work)
         echo "`cat ~/.pass`"

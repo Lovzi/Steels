@@ -1,0 +1,12 @@
+
+
+case $1 in
+    start)
+        $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties
+        ;;
+    stop)
+        $KAFKA_HOME/bin/kafka-server-stop.sh
+        ;;
+    *)
+        echo "not args"
+esac
