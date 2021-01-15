@@ -1,0 +1,43 @@
+#! /usr/bin/env bash
+set -ex
+IFS=" "
+if [[ $# > 3 ]];then
+    echo "暂不支持删除多种类型文件"
+    exit 1;
+fi
+
+args=$@
+echo ${#args[*]}
+
+
+for((i=0;i<${#args[@]};i++));do
+    op=${args[i]}
+    echo $op
+    if [[ $op  == "-f" ]] || [[ $op == "-n" ]] ;then
+        option=$op
+        echo $op
+        unset ${args[i]}
+        break
+    fi
+done
+
+echo ${args}
+
+path=$1
+
+trash=$2
+
+
+
+echo "正在${path}下查找${trash}"
+
+log_path=$HOME/Ocean/logs/clean.out
+find $path -name $trash > log_path: 
+
+
+
+count=`wc -l $log_path`
+
+input=`read -p "共找到${count}条记录, 请确认一下操作[Y:删除，N:放弃，P:查看日志]"`
+
+        
